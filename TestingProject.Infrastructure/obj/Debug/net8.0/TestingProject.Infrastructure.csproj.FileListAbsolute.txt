@@ -1,0 +1,14 @@
+/Users/thiagoianino/Repos/Test/TestingProject/TestingProject.Infrastructure/obj/Debug/net8.0/TestingProject.Infrastructure.csproj.AssemblyReference.cache
+/Users/thiagoianino/Repos/Test/TestingProject/TestingProject.Infrastructure/obj/Debug/net8.0/TestingProject.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/thiagoianino/Repos/Test/TestingProject/TestingProject.Infrastructure/obj/Debug/net8.0/TestingProject.Infrastructure.AssemblyInfoInputs.cache
+/Users/thiagoianino/Repos/Test/TestingProject/TestingProject.Infrastructure/obj/Debug/net8.0/TestingProject.Infrastructure.AssemblyInfo.cs
+/Users/thiagoianino/Repos/Test/TestingProject/TestingProject.Infrastructure/obj/Debug/net8.0/TestingProject.Infrastructure.csproj.CoreCompileInputs.cache
+/Users/thiagoianino/Repos/Test/TestingProject/TestingProject.Infrastructure/bin/Debug/net8.0/TestingProject.Infrastructure.deps.json
+/Users/thiagoianino/Repos/Test/TestingProject/TestingProject.Infrastructure/bin/Debug/net8.0/TestingProject.Infrastructure.runtimeconfig.json
+/Users/thiagoianino/Repos/Test/TestingProject/TestingProject.Infrastructure/bin/Debug/net8.0/TestingProject.Infrastructure.dll
+/Users/thiagoianino/Repos/Test/TestingProject/TestingProject.Infrastructure/bin/Debug/net8.0/TestingProject.Infrastructure.pdb
+/Users/thiagoianino/Repos/Test/TestingProject/TestingProject.Infrastructure/obj/Debug/net8.0/TestingProject.Infrastructure.dll
+/Users/thiagoianino/Repos/Test/TestingProject/TestingProject.Infrastructure/obj/Debug/net8.0/refint/TestingProject.Infrastructure.dll
+/Users/thiagoianino/Repos/Test/TestingProject/TestingProject.Infrastructure/obj/Debug/net8.0/TestingProject.Infrastructure.pdb
+/Users/thiagoianino/Repos/Test/TestingProject/TestingProject.Infrastructure/obj/Debug/net8.0/TestingProject.Infrastructure.genruntimeconfig.cache
+/Users/thiagoianino/Repos/Test/TestingProject/TestingProject.Infrastructure/obj/Debug/net8.0/ref/TestingProject.Infrastructure.dll
