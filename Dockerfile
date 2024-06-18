@@ -21,6 +21,9 @@ RUN dotnet restore "TestingProject.Api/TestingProject.Api.csproj"
 # Copiar todo o restante do código
 COPY . .
 
+# Verificar a versão do dotnet-ef
+RUN dotnet ef --version
+
 # Compilar o projeto
 WORKDIR "/src/TestingProject.Api"
 RUN dotnet build "TestingProject.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
@@ -30,14 +33,17 @@ FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "TestingProject.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
+# Fase para instalar dotnet-ef
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS tools
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="/root/.dotnet/tools:${PATH}"
+
 # Fase final
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-
-# Instalar dotnet-ef globalmente
-ENV PATH="$PATH:/root/.dotnet/tools"
-RUN dotnet tool install --global dotnet-ef
+COPY --from=tools /root/.dotnet /root/.dotnet
+COPY --from=tools /usr/share/dotnet/sdk /usr/share/dotnet/sdk
 
 # Copiar as migrações
 COPY --from=build /src /src
