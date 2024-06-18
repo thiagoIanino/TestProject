@@ -1,5 +1,5 @@
 ﻿# Fase base
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine-amd64 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS base
 
 USER $APP_UID
 WORKDIR /app
@@ -7,7 +7,7 @@ EXPOSE 8080
 EXPOSE 8081
 
 # Fase de construção
-FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine-amd64 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
@@ -21,13 +21,15 @@ RUN dotnet restore "TestingProject.Api/TestingProject.Api.csproj"
 ENV PATH="$PATH:/root/.dotnet/tools"
 RUN printenv
 RUN dotnet tool install --global dotnet-ef
-RUN dotnet ef migrations add InitialMigration --project TestingProject.Infrastructure/TestingProject.Infrastructure.csproj --startup-project TestingProject.Api/TestingProject.Api.csproj
-RUN dotnet dotnet ef database update --project TestingProject.Infrastructure/TestingProject.Infrastructure.csproj --startup-project TestingProject.Api/TestingProject.Api.csproj
+
 
 
 # Copiar todo o restante do código
 COPY . .
 
+RUN dotnet ef --version
+RUN dotnet ef migrations add InitialMigration --project TestingProject.Infrastructure/TestingProject.Infrastructure.csproj --startup-project TestingProject.Api/TestingProject.Api.csproj
+RUN dotnet dotnet ef database update --project TestingProject.Infrastructure/TestingProject.Infrastructure.csproj --startup-project TestingProject.Api/TestingProject.Api.csproj
 # Compilar o projeto
 WORKDIR "/src/TestingProject.Api"
 RUN dotnet build "TestingProject.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
