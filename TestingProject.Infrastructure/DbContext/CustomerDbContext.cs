@@ -16,5 +16,6 @@ public class CustomerDbContext : Microsoft.EntityFrameworkCore.DbContext
             .Property(c => c.Id)
             .ValueGeneratedOnAdd();
 
+        base.OnModelCreating(modelBuilder);
     }
 }
