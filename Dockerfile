@@ -18,6 +18,13 @@ COPY ["TestingProject.Infrastructure/TestingProject.Infrastructure.csproj", "Tes
 # Restaurar dependências
 RUN dotnet restore "TestingProject.Api/TestingProject.Api.csproj"
 
+ENV PATH="$PATH:/root/.dotnet/tools"
+RUN printenv
+RUN dotnet tool install --global dotnet-ef
+RUN dotnet ef migrations add InitialMigration --project TestingProject.Infrastructure/TestingProject.Infrastructure.csproj --startup-project TestingProject.Api/TestingProject.Api.csproj
+RUN dotnet dotnet ef database update --project TestingProject.Infrastructure/TestingProject.Infrastructure.csproj --startup-project TestingProject.Api/TestingProject.Api.csproj
+
+
 # Copiar todo o restante do código
 COPY . .
 
