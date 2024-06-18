@@ -43,4 +43,4 @@ RUN dotnet publish "TestingProject.Api.csproj" -c $BUILD_CONFIGURATION -o /app/p
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "TestingProject.Api.dll"]
+ENTRYPOINT ["sh", "-c", "dotnet ef migrations add InitialMigration --project TestingProject.Infrastructure/TestingProject.Infrastructure.csproj --startup-project TestingProject.Api/TestingProject.Api.csproj && dotnet ef database update --no-build --project TestingProject.Infrastructure/TestingProject.Infrastructure.csproj --startup-project /src/TestingProject.Api/TestingProject.Api.csproj && dotnet TestingProject.Api.dll"]
