@@ -36,8 +36,8 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 
 # Instalar dotnet-ef globalmente
-RUN dotnet tool install --global dotnet-ef
 ENV PATH="$PATH:/root/.dotnet/tools"
+RUN dotnet tool install --global dotnet-ef
 
 # Copiar as migrações
 COPY --from=build /src /src
