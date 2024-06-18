@@ -18,18 +18,9 @@ COPY ["TestingProject.Infrastructure/TestingProject.Infrastructure.csproj", "Tes
 # Restaurar dependências
 RUN dotnet restore "TestingProject.Api/TestingProject.Api.csproj"
 
-ENV PATH="$PATH:/root/.dotnet/tools"
-RUN printenv
-RUN dotnet tool install --global dotnet-ef
-
-
-
 # Copiar todo o restante do código
 COPY . .
 
-RUN dotnet ef --version
-RUN dotnet ef migrations add InitialMigration --project TestingProject.Infrastructure/TestingProject.Infrastructure.csproj --startup-project TestingProject.Api/TestingProject.Api.csproj
-RUN dotnet dotnet ef database update --project TestingProject.Infrastructure/TestingProject.Infrastructure.csproj --startup-project TestingProject.Api/TestingProject.Api.csproj
 # Compilar o projeto
 WORKDIR "/src/TestingProject.Api"
 RUN dotnet build "TestingProject.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
@@ -43,4 +34,12 @@ RUN dotnet publish "TestingProject.Api.csproj" -c $BUILD_CONFIGURATION -o /app/p
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+# Instalar dotnet-ef globalmente
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
+
+# Copiar as migrações
+COPY --from=build /src /src
+
 ENTRYPOINT ["sh", "-c", "dotnet ef migrations add InitialMigration --project TestingProject.Infrastructure/TestingProject.Infrastructure.csproj --startup-project TestingProject.Api/TestingProject.Api.csproj && dotnet ef database update --no-build --project TestingProject.Infrastructure/TestingProject.Infrastructure.csproj --startup-project /src/TestingProject.Api/TestingProject.Api.csproj && dotnet TestingProject.Api.dll"]
